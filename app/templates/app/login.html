@@ -1,0 +1,46 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+{% block main-content %}
+<div class="container">
+ <div class="row my-3">
+  <div class="col-sm-6 offset-sm-3">
+   <h3>Login</h3>
+   <hr>
+   {% if messages %}
+     
+      {% for message in messages %}
+      <b  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </b>
+      {% endfor %}
+
+   {% endif %}
+   <form action="" method="post" novalidate class="shadow p-5">
+            {% csrf_token %}
+            {% for fm in form %}
+            <div class="form-group">
+            {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small><br>
+
+            </div>
+            
+            {% endfor %}
+            <input type="submit" value="Login" class = "btn btn-primary">
+       
+            <div class="text-center text-primary fw-bold">
+            <small>
+            New User ? <a href="{% url 'customerregistration' %}" class="text-danger">Sign Up </a>
+            </small>
+            
+            </div>
+            {% if form.non_field_errors %}
+            {% for err in form.non_field_errors %}
+      
+            <p class="alert alert-danger my-3">{{err}}</p>
+            {% endfor %}
+      
+      {% endif %}
+      
+   </form>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}

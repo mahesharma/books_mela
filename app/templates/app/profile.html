@@ -1,0 +1,50 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+  <h3>Welcome <h6>{{request.user|capfirst}}</h6></h3>
+  <div class="col-sm-2 border-end">
+   <ul class="list-unstyled">
+    <li class="d-grid"><a href="{% url 'profile' %}" class="btn {{active}}">Profile</a></li>
+    <li class="d-grid"><a href="{% url 'address' %}"class="btn" >Address</a></li>
+   </ul>
+  </div>
+  <div class="col-sm-8 offset-sm-1">
+    {% if messages %}
+     
+      {% for message in messages %}
+      <b  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </b>
+      {% endfor %} 
+      {% endif %}
+
+   <form action="" method="post">
+    {% csrf_token %}
+
+ {% for fm in form %}
+      <div class="form-group mb-3">
+      
+      {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+      </div>
+
+      {% endfor %}
+         <input type="submit" value="Save" class = "btn btn-primary">
+      
+     
+      
+      </div>
+      {% if form.non_field_errors %}
+      {% for err in form.non_field.errors %}
+      
+      <p class="alert alert-danger my-3">{{err}}</p>
+      {% endfor %}
+      
+      {% endif %}
+
+    
+   </form>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}
